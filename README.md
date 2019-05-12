@@ -1,5 +1,5 @@
 # Virtual Reddit
-A way to browse Reddit in VR
+A way to browse Reddit in VR using [React360](https://facebook.github.io/react-360/)
 
 ## Getting started
 1. Register a developer app with reddit [more details here](https://github.com/reddit-archive/reddit/wiki/oauth2)
