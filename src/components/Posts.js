@@ -1,13 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, View, VrButton, Text } from 'react-360'
+import { setCurrentPostIndex } from '../actions/PostListActions';
 
 // A box that will hold the preview of one post
-const postBox = ({id, title}) => (
+const postBox = onClickEvent => ({id, title, index}) => (
     <VrButton 
       key={id}
       style={styles.postBox}
-      onClick={ () => { console.log({id, title}) } }
+      onClick={ () => { onClickEvent(index) } }
     >
       <Text style={styles.postTitle}>{title}</Text>
     </VrButton>
@@ -15,12 +16,11 @@ const postBox = ({id, title}) => (
 
 class Posts extends React.Component {
   render() {
-    const { posts } = this.props
-    console.log(posts);
+    const { posts, setCurrentPost } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.postPanel}>
-          {posts.slice(0,5).map(postBox)}
+          {posts.slice(0,5).map(postBox(setCurrentPost))}
         </View>
       </View>
     )
@@ -33,12 +33,11 @@ const styles = StyleSheet.create({
     height: 600,
     backgroundColor: 'rgba(255, 255, 255, 0.4)',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   postBox: {
     width: 260,
-    height: 100,
     padding: 20,
     marginTop: 5,
     marginBottom: 5,
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   postTitle: {
-    fontSize: 20,
+    fontSize: 16,
   }
 })
 
@@ -55,6 +54,12 @@ const mapStateToProps = state => ({
   posts: state.posts
 })
 
-const PostsLinked = connect(mapStateToProps)(Posts)
+const mapDispatchToProps = dispatch => ({
+  setCurrentPost: index => {
+    dispatch(setCurrentPostIndex(index))
+  }
+})
+
+const PostsLinked = connect(mapStateToProps, mapDispatchToProps)(Posts)
 
 export default PostsLinked

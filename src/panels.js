@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 
-import { Posts, Preview } from './components'
+import { Posts, Preview, Comments } from './components'
 import store from './store'
 
 // This way of storing the same store in all of these panels would work even if
@@ -34,7 +34,7 @@ export class RightPanel extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Posts />
+        <Comments />
       </Provider>
     )
   }
