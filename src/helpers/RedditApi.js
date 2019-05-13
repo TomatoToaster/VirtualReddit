@@ -1,4 +1,4 @@
-import apiKeys from '../config/apiKeys';
+import apiKeys from '../../config/apiKeys';
 
 // helper functions to access the reddit api
 export default {
@@ -43,8 +43,8 @@ export default {
   trimListingsJSON(listings) {
     let trimmed = {}
     trimmed.posts = listings.data.children.map(({data}) => data).map(
-      ({ id, title, url, is_self, is_video, thumbnail }) => 
-      ({ id, title, url, is_self, is_video, thumbnail })
+      ({ id, title, url, is_self, is_video, thumbnail, preview, num_comments }) => 
+      ({ id, title, url, is_self, is_video, thumbnail, preview, num_comments })
     )
     return trimmed;
   }
