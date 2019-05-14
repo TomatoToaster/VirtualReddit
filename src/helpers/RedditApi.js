@@ -42,9 +42,13 @@ export default {
   // Trims json from listings to get relevant information
   trimListingsJSON(listings) {
     let trimmed = {}
-    trimmed.posts = listings.data.children.map(({data}, idx) => ({ ...data, index: idx})).map(
-      ({ id, title, url, is_self, is_video, thumbnail, preview, num_comments, index }) => 
-      ({ id, title, url, is_self, is_video, thumbnail, preview, num_comments, index })
+    trimmed.posts = listings.data.children
+      .map(({data}) => data)
+      .filter(({stickied}) => !stickied)
+      .map(
+        ({id, title, url, is_self, is_video, thumbnail, preivew, num_comments}, index) => 
+        ({id, title, url, is_self, is_video, thumbnail, preivew, num_comments, index})
+    
     )
     return trimmed;
   }
