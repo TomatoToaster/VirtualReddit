@@ -4,9 +4,13 @@ import { StyleSheet, View, VrButton, Text } from 'react-360'
 
 class Comments extends React.Component {
   render() {
+    const title = this.props.post ? this.props.post.title : 'Click one of the posts on the left to see a preview'
     return (
       <View style={styles.container}>
-        <Text style={styles.postTitle}>Comments Coming Soon</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{title}</Text>
+        </View>
+        <Text style={styles.title}>Comments Coming Soon</Text>
       </View>
     )
   }
@@ -18,15 +22,24 @@ const styles = StyleSheet.create({
     height: 600,
     backgroundColor: 'rgba(255, 255, 255, 0.4)',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  postTitle: {
+  titleContainer: {
+    width: '100%',
+    height: 100,
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  title: {
     fontSize: 16,
   }
 })
 
 const mapStateToProps = state => ({
+  post: state.posts[state.currentPost],
+  currentPost: state.currentPost
 })
 
 const CommentsLinked = connect(mapStateToProps)(Comments)
