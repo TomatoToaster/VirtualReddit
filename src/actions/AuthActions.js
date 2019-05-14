@@ -1,21 +1,19 @@
 import { RedditApi } from '../helpers'
 
-import { fetchPosts } from './PostListActions'
-
 export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
 
-const setAccessToken = (token) => ({
+export const setAccessToken = (token) => ({
   type: SET_ACCESS_TOKEN,
   token
 })
 
+// Dispatched function returns Promise that gets resolved after access token is set
 export const getAccessToken = () => {
   return (dispatch) => {
-    RedditApi.getAccessToken()
-    .then(resp => {
-      let { access_token } = resp
-      dispatch(setAccessToken(access_token))
-      dispatch(fetchPosts())
-    })
+    return RedditApi.getAccessToken()
+      .then(response => {
+        let { access_token } = response
+        dispatch(setAccessToken(access_token))
+      })
   }
 }

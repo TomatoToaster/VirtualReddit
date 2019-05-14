@@ -16,18 +16,22 @@ const postFetchError = error => ({
   error
 })
 
+// Dispatched function returns a Promise that resolves after posts are fetched
+// or rejects if no access token exists
 export const fetchPosts = (subreddit) => {
   return (dispatch, getState) => {
     let { accessToken } = getState()
     if (!accessToken) {
-      postFetchError('No Access Token for user')
+      const errorMessage = 'fetchPosts error: No Access Token for user'
+      dispatch(postFetchError(errorMessage))
+      return Promise.reject(new Error(errorMessage))
     }
     else {
-      RedditApi.frontPageContent(accessToken, subreddit)
-      .then(res => {
-        const trimmedPosts = RedditApi.trimListingsJSON(res).posts
-        dispatch(postFetchDone(trimmedPosts))
-      })
+      return RedditApi.frontPageContent(accessToken, subreddit)
+        .then(res => {
+          const trimmedPosts = RedditApi.trimListingsJSON(res).posts
+          dispatch(postFetchDone(trimmedPosts))
+        })
     }
   }
 }
