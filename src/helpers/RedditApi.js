@@ -43,9 +43,13 @@ export default {
   trimListingsJSON(listings) {
     let trimmed = {}
     trimmed.posts = listings.data.children
+      // lift up the data from each child of the list
       .map(({data}) => data)
+      // filter out the sticky posts
       .filter(({stickied}) => !stickied)
-      .map(
+      // then trim out the unecessary data while keeping track of index so that
+      // selecting a specific post can be easier
+      .map( 
         ({id, title, url, is_self, is_video, thumbnail, preivew, num_comments}, index) => 
         ({id, title, url, is_self, is_video, thumbnail, preivew, num_comments, index})
     
