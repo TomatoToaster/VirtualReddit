@@ -7,9 +7,13 @@
     "bundle": "node node_modules/react-360/scripts/bundle.js",
     "open": "node -e \"require('xopen')('http://localhost:8081/index.html')\"",
     "devtools": "react-devtools",
+    "copy-static-assets": "cp -r ./static_assets ./build/static_assets",
+    "clean-build-folder": "rm -rf ./build",
+    "full-build": "npm run clean-build-folder && npm run bundle && npm run copy-static-assets",
     "test": "jest"
   },
   "dependencies": {
+    "express": "^4.16.4",
     "react": "16.3.2",
     "react-360": "^1.1.0",
     "react-360-web": "^1.1.0",

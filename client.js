@@ -14,7 +14,7 @@ function init(bundle, parent, options = {}) {
   leftPanel.setAngle(-0.6, 0);
   const rightPanel = new Surface(300, 600, Surface.SurfaceShape.Flat);
   rightPanel.setAngle(0.6, 0);
-  const centerPanel = new Surface(600, 700, Surface.SurfaceShape.Flat);
+  const centerPanel = new Surface(600, 720, Surface.SurfaceShape.Flat);
   centerPanel.setAngle(0,0)
 
   // Render your app content to the default cylinder surface

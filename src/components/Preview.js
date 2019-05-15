@@ -2,88 +2,65 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, View, Image, Text } from 'react-360'
 
+const INITIAL_TITLE_AND_LINK = {
+  url: 'https://reddit360.com',
+  title: 'Click on one of the posts on the left to see a preview'
+}
+
 
 class Preview extends React.Component {
 
-  componentDidCatch(error, info) {
-    console.log(error)
-    console.log(info)
-  }
   render() {
-    if (!this.state.imageLoadError) {
-    }
+    let url, title, isPostSelected
     if (this.props.post) {
-      const { url, title } = this.props.post
-        // Crummy way to check if the Image load will fail because of cors (but it's
-        // all I can do for now)
-        let imageContent = this.state.imageLoadError ? (
-          <View style={styles.warningContainer}>
-              <Text style={styles.warningText}>
-                  You're seeing this message because I can't show you this
-                  image yet. Unfortunately, since reddit hoted images do not
-                  have Access-Control-Allow-Origin headers, I will have to
-                  run them through a proxy server. I don't want to do that
-                  quite yet, because I'll have to pay for the network traffic
-                  of sending the images through my server. However, If you
-                  install the Chrome extension "Allow-Control-Allow-Origin,"
-                  you can get around this issue, but make sure you turn off
-                  the extension after using it here! Until I set up a proxy,
-                  you will only be able to view externally hosted images like
-                  those from imgur. Sorry about that!
-              </Text>
-            <Image style={styles.imagePreview} source={{uri: url}} />
-            </View>
-          ) : (
-            <Image style={styles.imagePreview} source={{uri: url}} />
-          )
-      return (
-        <View style={styles.container}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>
-              {title}
-            </Text>
-          </View>
-          {imageContent}
-          <View style={styles.footerContainer}>
-            <Text style={styles.bottomText}>
+      isPostSelected = true; // really annoying but we need a semicolon here
+      ({ url, title } = this.props.post)
+    } else {
+      isPostSelected = false; // really annoying but we need a semicolon here
+      ({ url, title } = INITIAL_TITLE_AND_LINK)
+    }
+    return (
+      <View style={styles.container}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>
+            {title}
+          </Text>
+        </View>
+        <View style={styles.addressBar}>
+          <View style={styles.addressBarBox}>
+            <Text style={styles.addressBarText}>
               {url}
             </Text>
           </View>
         </View>
-      )
-    } else {
-      return (
-        <View style={styles.container}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>
-              Click on one of the posts on the left to see a preview
-            </Text>
-          </View>
-          <View style={styles.warningContainer} />
-          <View style={styles.footerContainer}>
-            <Text style={styles.bottomText}>
-              link will show up here
-            </Text>
-          </View>
+        { isPostSelected ? (
+          <Image style={styles.imagePreview} source={{uri: url}} />
+        ) : (
+          <View style={styles.imagePaddedPreview} />
+        ) }
+        <View style={styles.footerContainer}>
+          <Text style={styles.bottomText}>
+            * If no image is showing up, see README on github.com/TomatoToaster/VirtualReddit * 
+          </Text>
         </View>
-      )
-    }
+      </View>
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     width:600,
-    height: 700,
+    height: 720,
     backgroundColor: 'rgba(50, 50, 50, 0.9)',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    borderWidth: 2,
   },
   titleContainer: {
     width: '100%',
     height: 80,
-    borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 5,
@@ -92,31 +69,47 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25
   },
+  imagePaddedPreview: {
+    width: 600,
+    height: 620,
+  },
   imagePreview: {
     width: 600,
     height: 600,
-    padding: 20,
-    borderWidth: 2
+    borderWidth: 2,
+    borderTopWidth: 0,
   },
-  warningContainer: {
+  addressBar: {
     width: '100%',
-    height: 600,
-    padding: 20,
-    borderWidth: 2
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
   },
-  warningText :{
-    fontSize: 22
+  addressBarBox: {
+    backgroundColor: '#fff',
+    paddingLeft: 15,
+    paddingRight: 15,
+    width: '90%',
+    height: 16,
+    borderWidth: 1,
+    borderRadius: 8,
+    justifyContent: 'center',
+  },
+  addressBarText: {
+    fontSize: 13,
+    color: '#000'
+  },
+  bottomText: {
+    fontSize: 13
   },
   footerContainer: {
     width: '100%',
     height: 20,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
-  bottomText: {
-    borderWidth: 1,
-    fontSize: 18
-  }
 })
 
 
