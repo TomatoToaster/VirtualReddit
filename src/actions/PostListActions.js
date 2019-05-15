@@ -36,7 +36,15 @@ export const fetchPosts = (subreddit) => {
   }
 }
 
-export const setCurrentPostIndex = (index) => ({
+export const setCurrentPostIndex = index => ({
   type: SET_CURRENT_POST,
   index
+})
+
+export const scrollUp = () => ({
+  type: SCROLL_UP
+})
+
+export const scrollDown = () => ({
+  type: SCROLL_DOWN
 })

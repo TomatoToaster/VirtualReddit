@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, View, VrButton, Text } from 'react-360'
-import { setCurrentPostIndex } from '../actions/PostListActions';
+import { StyleSheet, View, VrButton, Text, Image, asset } from 'react-360'
+import { setCurrentPostIndex, scrollUp, scrollDown } from '../actions/PostListActions';
 
 // A box that will hold the preview of one post
 const postBox = onClickEvent => ({id, title, index}) => (
@@ -16,12 +16,18 @@ const postBox = onClickEvent => ({id, title, index}) => (
 
 class Posts extends React.Component {
   render() {
-    const { posts, setCurrentPost } = this.props
+    const { posts, scrollIndex, setCurrentPost, scrollUp, scrollDown } = this.props
     return (
       <View style={styles.container}>
+        <VrButton onClick={scrollUp}>
+          <Image style={styles.moreButtons} source={asset('ChevronUp.png')} />
+        </VrButton>
         <View style={styles.postPanel}>
-          {posts.slice(0,5).map(postBox(setCurrentPost))}
+          {posts.slice(scrollIndex, scrollIndex + 5).map(postBox(setCurrentPost))}
         </View>
+        <VrButton onClick={scrollDown}>
+          <Image style={styles.moreButtons} source={asset('ChevronDown.png')} />
+        </VrButton>
       </View>
     )
   }
@@ -33,17 +39,27 @@ const styles = StyleSheet.create({
     height: 600,
     backgroundColor: 'rgba(255, 255, 255, 0.4)',
     flexDirection: 'column',
-    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  postPanel: {
+    width: '100%',
+    height: 536,
+    paddingTop: 30,
+    paddingBottom: 30,
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   postBox: {
     width: 260,
-    padding: 20,
-    marginTop: 5,
-    marginBottom: 5,
+    padding: 15,
     backgroundColor: '#000000',
     borderColor: '#639dda',
     borderWidth: 1,
+  },
+  moreButtons: {
+    width: 32,
+    height: 32,
   },
   postTitle: {
     fontSize: 16,
@@ -51,12 +67,19 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => ({
-  posts: state.posts
+  posts: state.posts.listings,
+  scrollIndex: state.posts.scrollIndex
 })
 
 const mapDispatchToProps = dispatch => ({
   setCurrentPost: index => {
     dispatch(setCurrentPostIndex(index))
+  },
+  scrollUp: () => {
+    dispatch(scrollUp())
+  },
+  scrollDown: () => {
+    dispatch(scrollDown())
   }
 })
 

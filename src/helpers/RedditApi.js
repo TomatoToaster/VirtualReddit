@@ -24,7 +24,7 @@ export default {
     const urlBase = 'https://oauth.reddit.com'
     const urlPost = '/hot'
     let searchParams = new URLSearchParams();
-    searchParams.set('limit', 5)
+    searchParams.set('limit', 27)
     let urlSubreddit = ''
     if (subreddit) {
       urlSubreddit = '/r/' + subreddit
@@ -55,5 +55,12 @@ export default {
     
     )
     return trimmed;
+  },
+
+  // Grabs a picture from reddit that requires a proxy
+  async getRedditPic(url) {
+    let downloadedImg = document.createElement('img')
+    downloadedImg.src = url
+    return console.log(downloadedImg)
   }
 };
