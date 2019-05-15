@@ -2,7 +2,6 @@
 A way to browse Reddit in VR using [React360](https://facebook.github.io/react-360/)
 
 Live version available at [reddit360.com](https://reddit360.com)
-***
 ## Getting started
 1. Register a developer app with reddit [more details here](https://github.com/reddit-archive/reddit/wiki/oauth2)
 2. Then copy the contents of configTemplate folder to a folder called config and replace the values in the `apiKeys.js` file
@@ -12,7 +11,6 @@ Live version available at [reddit360.com](https://reddit360.com)
     * npm start
 5. Then you can see the project running on localhost:8081/index.html
 
-***
 ## Troubleshooting
 ### Image not loading 
 * You're not seeing an image because it can be tricky to download certain
