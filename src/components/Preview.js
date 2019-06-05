@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
   title: {
-    fontSize: 25
+    fontSize: 25,
+    maxHeight: 90,
   },
   imagePaddedPreview: {
     width: 600,

@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   postTitle: {
     fontSize: 16,
-    maxHeight: 70,
+    maxHeight: 60,
   }
 })
 
